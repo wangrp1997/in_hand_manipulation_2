@@ -1,0 +1,17 @@
+services:
+  inhand:
+    build:
+      context: .
+      network: host
+    image: inhand-jiang:20.04
+    network_mode: host
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+    environment:
+      INHAND_HOME: /workspace/high_level
+      QSIM_HOME: /workspace/high_level/quasistatic_simulator
+      http_proxy: http://127.0.0.1:7897
+      https_proxy: http://127.0.0.1:7897
+    stdin_open: true
+    tty: true

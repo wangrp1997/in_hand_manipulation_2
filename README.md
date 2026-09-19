@@ -19,6 +19,40 @@ We do not provide code related to the hardware implementation, as it depends on 
 
 The following instructions has been tested on an empty Ubuntu 20.04 system and Python 3.8.
 
+### Docker（本机非 20.04 时用这个）
+
+高层 planner + MeshCat，不含 ROS2 / MuJoCo。
+
+镜像只需编一次（改 Dockerfile / 依赖或删了镜像才再编）：
+
+```bash
+./scripts/docker_build.sh
+```
+
+之后每次跑 demo：
+
+```bash
+sudo docker run --rm --network host \
+  -v "$PWD":/workspace -e MPLBACKEND=Agg \
+  -w /workspace/high_level/planner/ddp/tasks \
+  inhand-jiang:20.04 \
+  python inhand_ddp_leap_zrot_cube.py
+```
+
+把最后的文件名换成下面任意一个即可（都是 MeshCat，http://localhost:7000/）：
+
+- `inhand_ddp_leap_zrot_cube.py`：方块绕 z
+- `inhand_ddp_full_hand_zrot_cube.py`：整手 + 方块绕 z
+- `inhand_ddp_full_hand_quat.py`：整手、任意姿态
+- `inhand_ddp_full_hand_zrot.py` / `inhand_ddp_full_hand_zrot_v2.py`：整手绕 z
+- `inhand_ddp_leap_zrot_any_cylinder.py`：圆柱绕 z
+- `inhand_ddp_leap_wrist_zrot_any_cylinder.py`：带手腕、圆柱绕 z
+- `inhand_ddp_leap_planar_rotate.py`：平面转
+- `inhand_ddp_leap_slider.py`：滑块
+- `inhand_ddp_leap_open_box.py`：开盒
+
+浏览器打开 http://localhost:7000/ 。镜像已钉死 `casadi 3.6.7`、`pinocchio 3.4.0`、`crocoddyl 2.1.0`。
+
 ### (High-Level) Motion-Contact Planner
 
 1. Install Anaconda3 and create a virtual environment

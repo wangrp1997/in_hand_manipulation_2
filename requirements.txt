@@ -2,6 +2,6 @@ numpy
 scipy
 cvxpy
 parse
-ruamel
+ruamel.yaml
 meshcat
 IPython
